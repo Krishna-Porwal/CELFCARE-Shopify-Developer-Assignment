@@ -149,37 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error('Serum Duo addToCart error:', error);
     }
 
-    try {
-      if (errorNode) errorNode.textContent = '';
-
-      const response = await fetch('/cart/add.js', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json; charset=utf-8' },
-        body: JSON.stringify({
-          items,
-          sections: ['cart-drawer', 'cart-icon-bubble'],
-          sections_url: window.location.pathname
-        })
-      });
-
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error(data?.message || 'Unable to add to cart.');
-      }
-
-      const cartDrawer = document.querySelector('cart-drawer');
-      if (cartDrawer && typeof cartDrawer.renderContents === 'function') {
-        cartDrawer.renderContents(data);
-      } else {
-        openCartDrawer();
-      }
-
-      document.body.classList.add('overflow-hidden');
-    } catch (error) {
-      if (errorNode) {
-        errorNode.textContent = error.message || 'Something went wrong while adding to cart.';
-      }
-    }
+    // Note: request/response handled above with instrumentation; no duplicate call.
   };
 
   addToCartButton?.addEventListener('click', () => addToCart(addToCartButton));
