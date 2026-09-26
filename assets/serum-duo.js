@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Log runtime values
       console.log('Serum Duo addToCart - selectedVariantId:', selectedVariantId);
       console.log('Serum Duo addToCart - refillVariantId (raw):', refillVariantId, 'refillIdNum:', refillIdNum);
-      console.log('Serum Duo addToCart - refill checked:', refillCheckbox ? refillCheckbox.checked : false);
+      console.log('Serum Duo addToCart - refill checked:', refillChecked);
       console.log('Serum Duo addToCart - items payload:', items);
       debugNode.textContent = 'Request payload:\n' + JSON.stringify({ items }, null, 2) + '\n\nSending request...';
       
@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // If returnedItems present, check for refill id
       if (returnedItems) {
         const hasRefill = returnedItems.some((it) => Number(it.variant_id || it.id) === refillIdNum);
-        if (!hasRefill && refillCheckbox && refillCheckbox.checked && refillIdNum > 0) {
+        if (!hasRefill && refillChecked && refillIdNum > 0) {
           const msg = 'Refill variant not present in cart response. Response items: ' + JSON.stringify(returnedItems.map((i) => ({ id: i.id || i.variant_id, quantity: i.quantity || i.qty })), null, 2);
           if (errorNode) errorNode.textContent = 'Refill was not added. ' + msg;
           console.warn(msg);
