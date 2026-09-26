@@ -150,7 +150,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const selectedVariant = variantIds[recommendation];
 
-    if (!selectedVariant) {
+    // Treat missing or "0" as not configured
+    if (!selectedVariant || Number.isNaN(Number(selectedVariant)) || Number(selectedVariant) === 0) {
       return;
     }
 

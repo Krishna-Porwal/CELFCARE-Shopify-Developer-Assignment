@@ -67,8 +67,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     items.push({ id: Number(selectedVariantId), quantity: 1 });
 
-    if (refillCheckbox && refillCheckbox.checked && refillVariantId) {
-      items.push({ id: Number(refillVariantId), quantity: 1 });
+    // Only include refill if configured with a real numeric variant id (>0)
+    const refillIdNum = Number(refillVariantId);
+    if (refillCheckbox && refillCheckbox.checked && refillVariantId && !Number.isNaN(refillIdNum) && refillIdNum > 0) {
+      items.push({ id: refillIdNum, quantity: 1 });
     }
 
     try {
