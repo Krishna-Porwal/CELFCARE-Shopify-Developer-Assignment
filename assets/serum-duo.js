@@ -79,43 +79,21 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       if (errorNode) errorNode.textContent = '';
       
-      // Create or find a debug node to show request/response for troubleshooting
-      let debugNode = hero.querySelector('[data-refill-debug]');
-      if (!debugNode) {
-        debugNode = document.createElement('pre');
-        debugNode.setAttribute('data-refill-debug', '');
-        debugNode.style.whiteSpace = 'pre-wrap';
-        debugNode.style.fontSize = '12px';
-        debugNode.style.marginTop = '8px';
-        debugNode.style.maxHeight = '200px';
-        debugNode.style.overflow = 'auto';
-        debugNode.style.background = 'rgba(0,0,0,0.03)';
-        debugNode.style.padding = '8px';
-        const container = hero.querySelector('.serum-hero__content') || hero;
-        container.appendChild(debugNode);
-      }
-      
-      // Log runtime values
+      // Log runtime values (console only)
       console.log('Serum Duo addToCart - selectedVariantId:', selectedVariantId);
       console.log('Serum Duo addToCart - refillVariantId (raw):', refillVariantId, 'refillIdNum:', refillIdNum);
       console.log('Serum Duo addToCart - refill checked:', refillChecked);
       console.log('Serum Duo addToCart - items payload:', items);
-      debugNode.textContent = 'Request payload:\n' + JSON.stringify({ items }, null, 2) + '\n\nSending request...';
-      
+
       const response = await fetch('/cart/add.js', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json; charset=utf-8' },
-        body: JSON.stringify({
-          items,
-          sections: ['cart-drawer', 'cart-icon-bubble'],
-          sections_url: window.location.pathname
-        })
+        body: JSON.stringify({ items })
       });
-      
+
       const data = await response.json();
       console.log('Serum Duo addToCart - response status:', response.status);
       console.log('Serum Duo addToCart - response:', data);
-      debugNode.textContent = 'Request payload:\n' + JSON.stringify({ items }, null, 2) + '\n\nResponse status: ' + response.status + '\n' + JSON.stringify(data, null, 2);
       
       if (!response.ok) {
         // show visible error
@@ -137,14 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
       
-      const cartDrawer = document.querySelector('cart-drawer');
-      if (cartDrawer && typeof cartDrawer.renderContents === 'function') {
-        cartDrawer.renderContents(data);
-      } else {
-        openCartDrawer();
-      }
-      
-      document.body.classList.add('overflow-hidden');
+      // Silent add: do not open or render the cart drawer here.
     } catch (error) {
       if (errorNode) {
         errorNode.textContent = error.message || 'Something went wrong while adding to cart.';
