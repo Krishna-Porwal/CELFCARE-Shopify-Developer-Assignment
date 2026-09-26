@@ -94,6 +94,29 @@ document.addEventListener('DOMContentLoaded', () => {
     state.answers[question] = answer;
   };
 
+  const updateCartAttributes = async () => {
+    const attributes = {
+      age: state.answers.age || '',
+      concern: state.answers.concern || '',
+      skin_type: state.answers.skinType || '',
+      routine: state.answers.routine || ''
+    };
+
+    const response = await fetch('/cart/update.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8'
+      },
+      body: JSON.stringify({ attributes })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      console.error('Quiz cart attribute update failed:', data);
+    }
+  };
+
   steps.forEach((step, index) => {
     const options = step.querySelectorAll('[data-answer]');
     options.forEach((option) => {
@@ -158,18 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.body.classList.add('overflow-hidden');
     }
 
-    fetch('/cart/update.js', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8'
-      },
-      body: JSON.stringify({ attributes: {
-        age: state.answers.age || '',
-        concern: state.answers.concern || '',
-        skin_type: state.answers.skinType || '',
-        routine: state.answers.routine || ''
-      }})
-    });
+    await updateCartAttributes();
   });
 
   renderStep();

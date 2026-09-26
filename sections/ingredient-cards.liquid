@@ -11,6 +11,12 @@
       if ingredient_list != blank
         assign ingredient_items = ingredient_list
       endif
+
+      assign glossary_page = section.settings.glossary_page
+      assign glossary_url = '/pages/ingredient-glossary'
+      if glossary_page != blank and glossary_page.url != blank
+        assign glossary_url = glossary_page.url
+      endif
     %}
 
     {% if ingredient_items != blank and ingredient_items.size > 0 %}
@@ -22,7 +28,7 @@
           {% assign ingredient_description = ingredient.description %}
           {% assign ingredient_image = ingredient.image %}
 
-          <a class="ingredient-card" href="#{{ ingredient_handle }}">
+          <a class="ingredient-card" href="{{ glossary_url }}#{{ ingredient_handle }}">
             {% if ingredient_image != blank %}
               <div class="ingredient-card__image-wrap">
                 <img
@@ -59,6 +65,12 @@
       "id": "heading",
       "label": "Heading",
       "default": "Clinically chosen actives"
+    },
+    {
+      "type": "page",
+      "id": "glossary_page",
+      "label": "Ingredient Glossary page",
+      "info": "Choose the Ingredient Glossary page to link ingredient cards to. Falls back to /pages/ingredient-glossary."
     }
   ],
   "presets": [
