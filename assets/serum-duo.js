@@ -72,6 +72,82 @@ document.addEventListener('DOMContentLoaded', () => {
     if (refillCheckbox && refillCheckbox.checked && refillVariantId && !Number.isNaN(refillIdNum) && refillIdNum > 0) {
       items.push({ id: refillIdNum, quantity: 1 });
     }
+    
+    try {
+      if (errorNode) errorNode.textContent = '';
+      
+      // Create or find a debug node to show request/response for troubleshooting
+      let debugNode = hero.querySelector('[data-refill-debug]');
+      if (!debugNode) {
+        debugNode = document.createElement('pre');
+        debugNode.setAttribute('data-refill-debug', '');
+        debugNode.style.whiteSpace = 'pre-wrap';
+        debugNode.style.fontSize = '12px';
+        debugNode.style.marginTop = '8px';
+        debugNode.style.maxHeight = '200px';
+        debugNode.style.overflow = 'auto';
+        debugNode.style.background = 'rgba(0,0,0,0.03)';
+        debugNode.style.padding = '8px';
+        const container = hero.querySelector('.serum-hero__content') || hero;
+        container.appendChild(debugNode);
+      }
+      
+      // Log runtime values
+      console.log('Serum Duo addToCart - selectedVariantId:', selectedVariantId);
+      console.log('Serum Duo addToCart - refillVariantId (raw):', refillVariantId, 'refillIdNum:', refillIdNum);
+      console.log('Serum Duo addToCart - refill checked:', refillCheckbox ? refillCheckbox.checked : false);
+      console.log('Serum Duo addToCart - items payload:', items);
+      debugNode.textContent = 'Request payload:\n' + JSON.stringify({ items }, null, 2) + '\n\nSending request...';
+      
+      const response = await fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json; charset=utf-8' },
+        body: JSON.stringify({
+          items,
+          sections: ['cart-drawer', 'cart-icon-bubble'],
+          sections_url: window.location.pathname
+        })
+      });
+      
+      const data = await response.json();
+      console.log('Serum Duo addToCart - response status:', response.status);
+      console.log('Serum Duo addToCart - response:', data);
+      debugNode.textContent = 'Request payload:\n' + JSON.stringify({ items }, null, 2) + '\n\nResponse status: ' + response.status + '\n' + JSON.stringify(data, null, 2);
+      
+      if (!response.ok) {
+        // show visible error
+        const message = data?.message || 'Unable to add to cart.';
+        if (errorNode) errorNode.textContent = message;
+        return;
+      }
+      
+      // Response may include cart data or a sections payload. Try to detect line items.
+      const returnedItems = data?.items || (data?.cart && data.cart.items) || null;
+      
+      // If returnedItems present, check for refill id
+      if (returnedItems) {
+        const hasRefill = returnedItems.some((it) => Number(it.variant_id || it.id) === refillIdNum);
+        if (!hasRefill && refillCheckbox && refillCheckbox.checked && refillIdNum > 0) {
+          const msg = 'Refill variant not present in cart response. Response items: ' + JSON.stringify(returnedItems.map((i) => ({ id: i.id || i.variant_id, quantity: i.quantity || i.qty })), null, 2);
+          if (errorNode) errorNode.textContent = 'Refill was not added. ' + msg;
+          console.warn(msg);
+        }
+      }
+      
+      const cartDrawer = document.querySelector('cart-drawer');
+      if (cartDrawer && typeof cartDrawer.renderContents === 'function') {
+        cartDrawer.renderContents(data);
+      } else {
+        openCartDrawer();
+      }
+      
+      document.body.classList.add('overflow-hidden');
+    } catch (error) {
+      if (errorNode) {
+        errorNode.textContent = error.message || 'Something went wrong while adding to cart.';
+      }
+      console.error('Serum Duo addToCart error:', error);
+    }
 
     try {
       if (errorNode) errorNode.textContent = '';
@@ -79,7 +155,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const response = await fetch('/cart/add.js', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json; charset=utf-8' },
-        body: JSON.stringify({ items })
+        body: JSON.stringify({
+          items,
+          sections: ['cart-drawer', 'cart-icon-bubble'],
+          sections_url: window.location.pathname
+        })
       });
 
       const data = await response.json();

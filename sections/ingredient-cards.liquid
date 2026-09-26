@@ -6,12 +6,8 @@
     </div>
 
     {% liquid
-      assign ingredient_list = product.metafields.custom.key_ingredients
-      assign ingredient_items = blank
-      if ingredient_list != blank
-        assign ingredient_items = ingredient_list
-      endif
-
+      assign ingredient_field = product.metafields.custom.key_ingredients
+      assign ingredient_items = ingredient_field.value | default: ingredient_field
       assign glossary_page = section.settings.glossary_page
       assign glossary_url = '/pages/ingredient-glossary'
       if glossary_page != blank and glossary_page.url != blank
