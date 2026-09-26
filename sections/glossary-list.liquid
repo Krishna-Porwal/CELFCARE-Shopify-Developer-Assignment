@@ -1,0 +1,82 @@
+{{ 'glossary.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'glossary.js' | asset_url }}" defer="defer"></script>
+
+<section class="glossary-list section-{{ section.id }}-padding">
+  <div class="page-width">
+    <div class="glossary-list__header">
+      <p class="eyebrow">Ingredient glossary</p>
+      <h1>{{ section.settings.heading | default: 'Ingredient glossary' }}</h1>
+    </div>
+
+    <div class="glossary-controls">
+      <label class="glossary-search" for="glossary-search-{{ section.id }}">
+        <span class="visually-hidden">Search ingredients</span>
+        <input id="glossary-search-{{ section.id }}" type="search" placeholder="Search ingredients" data-glossary-search>
+      </label>
+
+      <div class="glossary-filter" role="group" aria-label="Filter by function">
+        <button type="button" class="glossary-filter__button is-active" data-filter="all">All</button>
+        <button type="button" class="glossary-filter__button" data-filter="Firming">Firming</button>
+        <button type="button" class="glossary-filter__button" data-filter="Hydrating">Hydrating</button>
+        <button type="button" class="glossary-filter__button" data-filter="Barrier support">Barrier support</button>
+        <button type="button" class="glossary-filter__button" data-filter="Antioxidant">Antioxidant</button>
+      </div>
+    </div>
+
+    {% assign metaobjects = shop.metaobjects.ingredient.values %}
+    {% if metaobjects != blank and metaobjects.size > 0 %}
+      <div class="glossary-grid">
+        {% for ingredient in metaobjects %}
+          {% assign ingredient_name = ingredient.name %}
+          {% assign ingredient_handle = ingredient.handle | default: ingredient_name | handleize %}
+          <article id="{{ ingredient_handle }}" class="glossary-card" data-name="{{ ingredient_name | escape }}" data-function="{{ ingredient.function | escape }}">
+            {% if ingredient.image != blank %}
+              <div class="glossary-card__image">
+                <img src="{{ ingredient.image | image_url: width: 400 }}" alt="{{ ingredient_name | escape }}" loading="lazy" width="400" height="400">
+              </div>
+            {% endif %}
+            <div class="glossary-card__content">
+              <div class="glossary-card__topline">
+                <span class="glossary-pill">{{ ingredient.function }}</span>
+              </div>
+              <h2>{{ ingredient.name }}</h2>
+              <p class="glossary-card__inci">{{ ingredient.inci_name }}</p>
+              <p>{{ ingredient.description }}</p>
+              {% if ingredient.used_in != blank %}
+                <div class="glossary-card__used-in">
+                  <span>Used in:</span>
+                  {% for product_ref in ingredient.used_in %}
+                    <a href="{{ product_ref.url }}">{{ product_ref.title }}</a>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="glossary-list__empty">Ingredient entries will appear here after the ingredient metaobject is created in Shopify Admin.</div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Glossary List",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Ingredient glossary"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Glossary List"
+    }
+  ]
+}
+{% endschema %}

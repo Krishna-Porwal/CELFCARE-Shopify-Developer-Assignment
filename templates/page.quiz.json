@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "main": {
+      "type": "quiz",
+      "settings": {
+        "heading": "Build your ritual",
+        "duo_variant_id": "",
+        "instafirm_variant_id": "",
+        "instalift_variant_id": ""
+      }
+    }
+  },
+  "order": ["main"]
+}

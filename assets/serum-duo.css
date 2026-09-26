@@ -1,0 +1,521 @@
+:root {
+  --celfcare-ivory: #F7F5F1;
+  --celfcare-surface: #ffffff;
+  --celfcare-text: #23231F;
+  --celfcare-muted: #63615A;
+  --celfcare-accent: #8A6D4E;
+  --celfcare-border: #E4E0D8;
+  --celfcare-success: #3A5A40;
+}
+
+.serum-hero {
+  background: var(--celfcare-ivory);
+  position: relative;
+}
+
+.serum-hero__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.4rem;
+  align-items: center;
+}
+
+.serum-hero__media {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.serum-hero__image-wrap {
+  background: var(--celfcare-surface);
+  border: 1px solid var(--celfcare-border);
+  border-radius: 2rem;
+  overflow: hidden;
+}
+
+.serum-hero__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.serum-hero__mobile-gallery {
+  display: block;
+  overflow: hidden;
+}
+
+.serum-hero__mobile-track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  gap: 0.8rem;
+  scrollbar-width: none;
+}
+
+.serum-hero__mobile-track::-webkit-scrollbar {
+  display: none;
+}
+
+.serum-hero__mobile-slide {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  margin: 0;
+  background: var(--celfcare-surface);
+  border: 1px solid var(--celfcare-border);
+  border-radius: 1.5rem;
+  overflow: hidden;
+}
+
+.serum-hero__mobile-slide img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.serum-hero__thumbs {
+  display: flex;
+  gap: 0.8rem;
+  overflow-x: auto;
+}
+
+.serum-hero__thumb {
+  width: 72px;
+  height: 72px;
+  padding: 0;
+  border: 1px solid var(--celfcare-border);
+  border-radius: 1rem;
+  background: transparent;
+  overflow: hidden;
+}
+
+.serum-hero__thumb.is-active {
+  border-color: var(--celfcare-accent);
+}
+
+.serum-hero__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.serum-hero__content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--celfcare-muted);
+}
+
+.serum-hero__title,
+.clinical-proof__header h2,
+.ingredient-cards__header h2,
+.how-to-use__header h2,
+.faq-accordion__header h2,
+.glossary-list__header h1 {
+  font-family: var(--font-heading-family);
+  color: var(--celfcare-text);
+}
+
+.serum-hero__eyebrow {
+  margin: 0;
+  color: var(--celfcare-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.72rem;
+}
+
+.serum-hero__title {
+  margin: 0;
+  font-size: clamp(3.2rem, 6vw, 5rem);
+  line-height: 0.95;
+}
+
+.serum-hero__subtitle {
+  margin: 0;
+  color: var(--celfcare-muted);
+  font-size: 1.08rem;
+}
+
+.serum-hero__pricing {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.serum-hero__price {
+  font-size: 2.1rem;
+  font-weight: 600;
+  color: var(--celfcare-text);
+}
+
+.serum-hero__variants {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.8rem;
+}
+
+.serum-hero__variant {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.2rem;
+  border: 1px solid var(--celfcare-border);
+  border-radius: 1.2rem;
+  background: var(--celfcare-surface);
+  color: var(--celfcare-text);
+  cursor: pointer;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.serum-hero__variant.is-selected {
+  border-color: var(--celfcare-accent);
+  background: rgba(138, 109, 78, 0.05);
+}
+
+.serum-hero__variant:hover,
+.serum-hero__variant:focus-visible {
+  border-color: var(--celfcare-accent);
+}
+
+.serum-hero__bundle {
+  padding-top: 0.4rem;
+}
+
+.serum-hero__bundle-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--celfcare-text);
+  font-size: 0.95rem;
+}
+
+.serum-hero__bundle-checkbox {
+  width: 18px;
+  height: 18px;
+}
+
+.serum-hero__cta {
+  width: 100%;
+}
+
+.serum-hero__error {
+  min-height: 1.5rem;
+  color: #8b1e1e;
+}
+
+.serum-hero__meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  border-top: 1px solid var(--celfcare-border);
+  padding-top: 1rem;
+  color: var(--celfcare-muted);
+}
+
+.serum-hero__meta div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.serum-hero__sticky-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 30;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.96);
+  border-top: 1px solid var(--celfcare-border);
+  box-shadow: 0 -8px 24px rgba(35, 35, 31, 0.08);
+  transform: translateY(120%);
+  transition: transform 0.2s ease;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.serum-hero__sticky-bar.is-visible {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+.serum-hero__sticky-button {
+  width: 100%;
+}
+
+.clinical-proof,
+.ingredient-cards,
+.how-to-use,
+.faq-accordion,
+.glossary-list {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+.clinical-proof__header,
+.ingredient-cards__header,
+.how-to-use__header,
+.faq-accordion__header,
+.glossary-list__header {
+  margin-bottom: 2rem;
+}
+
+.clinical-proof__grid,
+.ingredient-cards__grid,
+.how-to-use__steps,
+.glossary-grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.clinical-proof__grid {
+  grid-template-columns: 1fr;
+}
+
+.clinical-proof__card {
+  background: var(--celfcare-surface);
+  border: 1px solid var(--celfcare-border);
+  border-radius: 1.5rem;
+  padding: 2rem 1.5rem;
+}
+
+.clinical-proof__value {
+  font-size: clamp(2.2rem, 3vw, 3.2rem);
+  font-weight: 600;
+  color: var(--celfcare-text);
+}
+
+.clinical-proof__label {
+  margin: 0.8rem 0 0;
+  color: var(--celfcare-text);
+  font-weight: 600;
+}
+
+.clinical-proof__source {
+  margin: 0.4rem 0 0;
+  color: var(--celfcare-muted);
+}
+
+.ingredient-cards__grid {
+  grid-template-columns: 1fr;
+}
+
+.ingredient-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--celfcare-surface);
+  border: 1px solid var(--celfcare-border);
+  border-radius: 1.5rem;
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--celfcare-text);
+}
+
+.ingredient-card__image-wrap img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.ingredient-card__content {
+  padding: 1.5rem;
+}
+
+.ingredient-card__function {
+  margin: 0 0 0.5rem;
+  color: var(--celfcare-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.72rem;
+}
+
+.how-to-use__steps {
+  grid-template-columns: 1fr;
+}
+
+.how-to-use__step {
+  display: flex;
+  gap: 1.2rem;
+  background: var(--celfcare-surface);
+  border: 1px solid var(--celfcare-border);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+}
+
+.how-to-use__step-number {
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(138, 109, 78, 0.08);
+  color: var(--celfcare-accent);
+  font-weight: 600;
+}
+
+.faq-accordion__list {
+  display: grid;
+  gap: 1rem;
+}
+
+.faq-accordion__item {
+  background: var(--celfcare-surface);
+  border: 1px solid var(--celfcare-border);
+  border-radius: 1rem;
+}
+
+.faq-accordion__details summary {
+  list-style: none;
+  padding: 1.25rem 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 600;
+}
+
+.faq-accordion__details summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-accordion__answer {
+  padding: 0 1.5rem 1.5rem;
+  color: var(--celfcare-muted);
+}
+
+.glossary-controls {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.glossary-search input {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border-radius: 999px;
+  border: 1px solid var(--celfcare-border);
+  background: var(--celfcare-surface);
+}
+
+.glossary-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.glossary-filter__button {
+  border: 1px solid var(--celfcare-border);
+  background: transparent;
+  color: var(--celfcare-text);
+  border-radius: 999px;
+  padding: 0.55rem 0.9rem;
+  cursor: pointer;
+}
+
+.glossary-filter__button.is-active {
+  background: var(--celfcare-accent);
+  color: #fff;
+  border-color: var(--celfcare-accent);
+}
+
+.glossary-grid {
+  grid-template-columns: 1fr;
+}
+
+.glossary-card {
+  display: grid;
+  background: var(--celfcare-surface);
+  border: 1px solid var(--celfcare-border);
+  border-radius: 1.5rem;
+  overflow: hidden;
+}
+
+.glossary-card__image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.glossary-card__content {
+  padding: 1.5rem;
+}
+
+.glossary-pill {
+  display: inline-block;
+  background: rgba(138, 109, 78, 0.08);
+  color: var(--celfcare-accent);
+  border-radius: 999px;
+  padding: 0.35rem 0.7rem;
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.glossary-card__inci {
+  color: var(--celfcare-muted);
+}
+
+.glossary-card__used-in {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+@media screen and (max-width: 767px) {
+  .serum-hero__sticky-bar {
+    display: block;
+  }
+
+  .serum-hero__image-wrap {
+    display: none;
+  }
+
+  .serum-hero__mobile-gallery {
+    display: block;
+  }
+
+  .serum-hero__thumbs {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .serum-hero__mobile-gallery {
+    display: none;
+  }
+
+  .serum-hero__image-wrap {
+    display: block;
+  }
+
+  .serum-hero__grid {
+    grid-template-columns: 1.05fr 0.95fr;
+  }
+
+  .serum-hero__variants {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .serum-hero__sticky-bar {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .serum-hero__sticky-bar {
+    transition: none;
+  }
+}

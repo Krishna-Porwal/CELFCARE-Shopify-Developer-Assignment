@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CELFCARE — Style Guide & Page 1 Mobile Mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --color-bg: #F7F5F1;
+    --color-surface: #FFFFFF;
+    --color-text: #23231F;
+    --color-text-muted: #63615A;
+    --color-accent: #8A6D4E;
+    --color-border: #E4E0D8;
+    --color-success: #3A5A40;
+    --font-heading: 'Fraunces', Georgia, serif;
+    --font-body: 'Inter', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #EDEAE3; font-family: var(--font-body); color: var(--color-text); padding: 32px 16px; }
+  h1.doc-title { font-family: var(--font-heading); text-align: center; margin-bottom: 4px; }
+  p.doc-sub { text-align: center; color: var(--color-text-muted); margin-top: 0; margin-bottom: 40px; }
+
+  .swatches { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 48px; }
+  .swatch { text-align: center; font-size: 12px; }
+  .swatch .chip { width: 64px; height: 64px; border-radius: 8px; margin-bottom: 6px; border: 1px solid #0001; }
+
+  .type-scale { max-width: 480px; margin: 0 auto 48px; background: var(--color-surface); padding: 24px; border-radius: 12px; }
+  .type-scale div { margin-bottom: 12px; }
+  .label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-muted); }
+
+  .btn-row { display: flex; gap: 12px; justify-content: center; margin-bottom: 48px; flex-wrap: wrap; }
+  .btn { font-family: var(--font-body); font-weight: 600; border-radius: 8px; padding: 14px 24px; border: none; cursor: pointer; }
+  .btn-primary { background: var(--color-text); color: var(--color-bg); }
+  .btn-secondary { background: transparent; border: 1px solid var(--color-border); color: var(--color-text); }
+
+  /* Phone frame */
+  .phone {
+    width: 375px; margin: 0 auto; background: var(--color-bg); border-radius: 28px;
+    border: 8px solid #111; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+  }
+  .phone-inner { padding: 16px; }
+  .gallery { aspect-ratio: 4/5; background: linear-gradient(135deg,#D8CFC0,#EDE7DB); border-radius: 16px; display:flex; align-items:center; justify-content:center; color:#8A806E; font-size:13px; margin-bottom: 8px;}
+  .dots { display:flex; justify-content:center; gap:6px; margin-bottom: 20px;}
+  .dot { width:6px; height:6px; border-radius:50%; background: var(--color-border); }
+  .dot.active { background: var(--color-accent); }
+
+  .eyebrow { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-accent); margin: 0 0 6px; }
+  .title { font-family: var(--font-heading); font-size: 26px; line-height: 1.15; margin: 0 0 8px; }
+  .subtitle { color: var(--color-text-muted); font-size: 14px; margin: 0 0 16px; }
+  .price-row { display:flex; align-items:baseline; gap:8px; margin-bottom:16px; }
+  .price-current { font-family: var(--font-heading); font-size: 22px; }
+  .price-compare { text-decoration: line-through; color: var(--color-text-muted); font-size: 14px; }
+
+  .pills { display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap; }
+  .pill { border:1px solid var(--color-border); border-radius:8px; padding:8px 12px; font-size:12px; }
+  .pill.active { border-color: var(--color-accent); background: rgba(138,109,78,0.08); }
+  .pill b { display:block; font-size:13px; }
+
+  .upsell { border:1px dashed var(--color-border); border-radius:8px; padding:12px; font-size:13px; margin-bottom:16px; display:flex; gap:8px; align-items:center;}
+
+  .atc { width:100%; padding: 14px; background: var(--color-text); color: var(--color-bg); border:none; border-radius:8px; font-weight:600; margin-bottom:16px; }
+
+  .trust { display:flex; flex-wrap:wrap; gap:10px; font-size:11px; color: var(--color-text-muted); list-style:none; padding:0; margin:0 0 24px; }
+
+  .section-label { text-align:center; font-family: var(--font-heading); font-size: 15px; margin: 40px 0 16px; color: var(--color-text-muted); }
+
+  .stats { display:flex; gap:8px; margin-bottom:16px;}
+  .stat-card { flex:1; background:var(--color-surface); border:1px solid var(--color-border); border-radius:12px; padding:12px; text-align:center; }
+  .stat-card b { display:block; font-family: var(--font-heading); font-size: 15px; }
+  .stat-card span { font-size:10px; color: var(--color-text-muted); }
+
+  .ing-grid { display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-bottom: 8px;}
+  .ing-card { border:1px solid var(--color-border); border-radius:8px; padding:10px; font-size:12px;}
+  .ing-card b { display:block; margin-bottom:2px; }
+  .ing-card span { color: var(--color-accent); font-size:11px; }
+
+  figcaption { text-align:center; font-size:12px; color:#666; margin-top: 12px; }
+</style>
+</head>
+<body>
+
+<h1 class="doc-title">CELFCARE — Style Sheet</h1>
+<p class="doc-sub">Reference for rebuilding in Figma · use alongside README design rationale</p>
+
+<div class="swatches">
+  <div class="swatch"><div class="chip" style="background:#F7F5F1"></div>Background<br>#F7F5F1</div>
+  <div class="swatch"><div class="chip" style="background:#FFFFFF; border:1px solid #ddd"></div>Surface<br>#FFFFFF</div>
+  <div class="swatch"><div class="chip" style="background:#23231F"></div>Text<br>#23231F</div>
+  <div class="swatch"><div class="chip" style="background:#63615A"></div>Muted text<br>#63615A</div>
+  <div class="swatch"><div class="chip" style="background:#8A6D4E"></div>Accent (clay)<br>#8A6D4E</div>
+  <div class="swatch"><div class="chip" style="background:#E4E0D8"></div>Border<br>#E4E0D8</div>
+  <div class="swatch"><div class="chip" style="background:#3A5A40"></div>Success<br>#3A5A40</div>
+</div>
+
+<div class="type-scale">
+  <div><span class="label">Heading / Fraunces (serif) — H1</span><div style="font-family: var(--font-heading); font-size:28px;">Your skin, lifted</div></div>
+  <div><span class="label">Heading — H2</span><div style="font-family: var(--font-heading); font-size:22px;">Key ingredients</div></div>
+  <div><span class="label">Body / Inter — regular</span><div style="font-size:15px;">Dermatologically patch-tested. Visible lift in under 3 minutes.</div></div>
+  <div><span class="label">Body — muted / caption</span><div style="font-size:12px; color:var(--color-text-muted);">Patch-tested · IS 4011:2018</div></div>
+</div>
+
+<div class="btn-row">
+  <button class="btn btn-primary">Add to Cart</button>
+  <button class="btn btn-secondary">View full ingredient list</button>
+</div>
+
+<div class="section-label">Page 1 — mobile (375px) mockup</div>
+<div class="phone">
+  <div class="phone-inner">
+    <div class="gallery">Product image / gallery slide 1 of 3</div>
+    <div class="dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
+
+    <p class="eyebrow">Anti-Aging Serum Duo</p>
+    <h2 class="title">InstaFirm + InstaLift</h2>
+    <p class="subtitle">Dermatologically patch-tested. Visible lift in under 3 minutes.</p>
+
+    <div class="price-row"><span class="price-current">₹2,499</span><span class="price-compare">₹3,798</span></div>
+
+    <div class="pills">
+      <div class="pill active"><b>Duo</b>₹2,499</div>
+      <div class="pill"><b>InstaFirm</b>₹1,399</div>
+      <div class="pill"><b>InstaLift</b>₹1,399</div>
+    </div>
+
+    <label class="upsell"><input type="checkbox"> Add a 30-day refill pack (+₹999)</label>
+
+    <button class="atc">Add to Cart</button>
+
+    <ul class="trust">
+      <li>Patch-tested · IS 4011:2018</li>
+      <li>Free shipping above ₹1,999</li>
+      <li>7-day returns</li>
+    </ul>
+
+    <div class="section-label" style="margin-top:8px;">Clinical proof</div>
+    <div class="stats">
+      <div class="stat-card"><b>Non-irritant</b><span>IS 4011:2018 patch test</span></div>
+      <div class="stat-card"><b>2 min</b><span>Visible firming</span></div>
+      <div class="stat-card"><b>25 days</b><span>Sustained result</span></div>
+    </div>
+
+    <div class="section-label">Key ingredients</div>
+    <div class="ing-grid">
+      <div class="ing-card"><b>Matrixyl 3000</b><span>Firming →</span></div>
+      <div class="ing-card"><b>Hyaluronic Acid</b><span>Hydrating →</span></div>
+      <div class="ing-card"><b>Niacinamide</b><span>Barrier →</span></div>
+      <div class="ing-card"><b>Centella Asiatica</b><span>Antioxidant →</span></div>
+    </div>
+  </div>
+</div>
+<figcaption>375px mobile-first layout — first screen shows product, price, and Add to Cart without scrolling, per the brief's hierarchy requirement.</figcaption>
+
+</body>
+</html>

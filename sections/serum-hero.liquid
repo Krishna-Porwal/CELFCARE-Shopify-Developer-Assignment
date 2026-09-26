@@ -1,0 +1,256 @@
+{{ 'serum-duo.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'serum-duo.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign selected_variant = product.selected_or_first_available_variant
+
+  assign duo_variant = product.variants | where: 'option1', 'Duo' | first
+  if duo_variant == blank
+    assign duo_variant = product.variants | first
+  endif
+
+  assign instafirm_variant = product.variants | where: 'option1', 'InstaFirm only' | first
+  if instafirm_variant == blank
+    assign instafirm_variant = product.variants | where: 'option1', 'InstaFirm' | first
+  endif
+
+  assign instalift_variant = product.variants | where: 'option1', 'InstaLift only' | first
+  if instalift_variant == blank
+    assign instalift_variant = product.variants | where: 'option1', 'InstaLift' | first
+  endif
+
+  if duo_variant == blank
+    assign duo_variant = product.selected_or_first_available_variant
+  endif
+  if instafirm_variant == blank
+    assign instafirm_variant = product.selected_or_first_available_variant
+  endif
+  if instalift_variant == blank
+    assign instalift_variant = product.selected_or_first_available_variant
+  endif
+-%}
+
+<section
+  class="serum-hero section-{{ section.id }}-padding"
+  data-product-id="{{ product.id }}"
+  data-product-handle="{{ product.handle }}"
+  data-refill-variant-id="{{ section.settings.refill_variant_id | escape }}"
+  data-default-variant-id="{{ selected_variant.id }}"
+>
+  <div class="page-width">
+    <div class="serum-hero__grid">
+      <div class="serum-hero__media">
+        <div class="serum-hero__image-wrap">
+          {% if selected_variant.featured_media != blank %}
+            <img
+              id="SerumHeroImage"
+              class="serum-hero__image"
+              src="{{ selected_variant.featured_media | image_url: width: 1200 }}"
+              alt="{{ selected_variant.featured_media.alt | default: product.title | escape }}"
+              loading="eager"
+              width="1200"
+              height="1200"
+            >
+          {% elsif product.featured_image != blank %}
+            <img
+              id="SerumHeroImage"
+              class="serum-hero__image"
+              src="{{ product.featured_image | image_url: width: 1200 }}"
+              alt="{{ product.featured_image.alt | default: product.title | escape }}"
+              loading="eager"
+              width="1200"
+              height="1200"
+            >
+          {% else %}
+            <div class="serum-hero__image serum-hero__image--placeholder">No product image available</div>
+          {% endif %}
+        </div>
+
+        {% if product.media.size > 0 %}
+          <div class="serum-hero__mobile-gallery" aria-label="Product gallery" data-mobile-gallery>
+            <div class="serum-hero__mobile-track" data-gallery-slider tabindex="0" aria-label="Swipe through product images">
+              {% for media in product.media limit: 5 %}
+                {% assign media_image = media.preview_image | default: media %}
+                <figure class="serum-hero__mobile-slide" data-gallery-slide>
+                  <img
+                    src="{{ media_image | image_url: width: 1200 }}"
+                    alt="{{ media.alt | default: product.title | escape }}"
+                    loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                    width="1200"
+                    height="1200"
+                  >
+                </figure>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+
+        {% if product.media.size > 1 %}
+          <div class="serum-hero__thumbs" aria-label="Product gallery thumbnails">
+            {% for media in product.media limit: 4 %}
+              <button
+                type="button"
+                class="serum-hero__thumb{% if forloop.first %} is-active{% endif %}"
+                data-image-src="{{ media.preview_image | image_url: width: 1200 }}"
+                data-gallery-thumb
+                aria-label="View image {{ forloop.index }}"
+              >
+                <img
+                  src="{{ media.preview_image | image_url: width: 220 }}"
+                  alt="{{ media.alt | default: product.title | escape }}"
+                  loading="lazy"
+                  width="220"
+                  height="220"
+                >
+              </button>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="serum-hero__content">
+        <p class="serum-hero__eyebrow">{{ section.settings.eyebrow | default: 'Dual-action skin reset' }}</p>
+        <h1 class="serum-hero__title">{{ product.title }}</h1>
+        <p class="serum-hero__subtitle">{{ section.settings.subtitle | default: 'Clinical hydration + visible firming in one ritual.' }}</p>
+
+        <div class="serum-hero__pricing" aria-live="polite">
+          <span class="serum-hero__price" data-price-display>{{ selected_variant.price | money }}</span>
+        </div>
+
+        <div class="serum-hero__variants" role="radiogroup" aria-label="Choose your serum option">
+          {% if duo_variant != blank %}
+            <button
+              type="button"
+              class="serum-hero__variant{% if selected_variant.id == duo_variant.id %} is-selected{% endif %}"
+              data-serum-variant
+              data-variant-id="{{ duo_variant.id }}"
+              data-variant-price="{{ duo_variant.price | money }}"
+              data-variant-image="{% if duo_variant.featured_image != blank %}{{ duo_variant.featured_image | image_url: width: 1200 }}{% elsif product.featured_image != blank %}{{ product.featured_image | image_url: width: 1200 }}{% endif %}"
+              data-variant-url="{{ product.url }}?variant={{ duo_variant.id }}"
+              aria-pressed="{% if selected_variant.id == duo_variant.id %}true{% else %}false{% endif %}"
+            >
+              <span class="serum-hero__variant-label">Duo</span>
+              <span class="serum-hero__variant-price">₹{{ duo_variant.price | divided_by: 100 }}</span>
+            </button>
+          {% endif %}
+
+          {% if instafirm_variant != blank %}
+            <button
+              type="button"
+              class="serum-hero__variant{% if selected_variant.id == instafirm_variant.id %} is-selected{% endif %}"
+              data-serum-variant
+              data-variant-id="{{ instafirm_variant.id }}"
+              data-variant-price="{{ instafirm_variant.price | money }}"
+              data-variant-image="{% if instafirm_variant.featured_image != blank %}{{ instafirm_variant.featured_image | image_url: width: 1200 }}{% elsif product.featured_image != blank %}{{ product.featured_image | image_url: width: 1200 }}{% endif %}"
+              data-variant-url="{{ product.url }}?variant={{ instafirm_variant.id }}"
+              aria-pressed="{% if selected_variant.id == instafirm_variant.id %}true{% else %}false{% endif %}"
+            >
+              <span class="serum-hero__variant-label">InstaFirm only</span>
+              <span class="serum-hero__variant-price">₹{{ instafirm_variant.price | divided_by: 100 }}</span>
+            </button>
+          {% endif %}
+
+          {% if instalift_variant != blank %}
+            <button
+              type="button"
+              class="serum-hero__variant{% if selected_variant.id == instalift_variant.id %} is-selected{% endif %}"
+              data-serum-variant
+              data-variant-id="{{ instalift_variant.id }}"
+              data-variant-price="{{ instalift_variant.price | money }}"
+              data-variant-image="{% if instalift_variant.featured_image != blank %}{{ instalift_variant.featured_image | image_url: width: 1200 }}{% elsif product.featured_image != blank %}{{ product.featured_image | image_url: width: 1200 }}{% endif %}"
+              data-variant-url="{{ product.url }}?variant={{ instalift_variant.id }}"
+              aria-pressed="{% if selected_variant.id == instalift_variant.id %}true{% else %}false{% endif %}"
+            >
+              <span class="serum-hero__variant-label">InstaLift only</span>
+              <span class="serum-hero__variant-price">₹{{ instalift_variant.price | divided_by: 100 }}</span>
+            </button>
+          {% endif %}
+        </div>
+
+        <div class="serum-hero__bundle">
+          <label class="serum-hero__bundle-label" for="serum-refill-checkbox-{{ section.id }}">
+            <input
+              id="serum-refill-checkbox-{{ section.id }}"
+              type="checkbox"
+              class="serum-hero__bundle-checkbox"
+              data-serum-refill-checkbox
+            >
+            <span>Add a 30-day refill pack (+₹999)</span>
+          </label>
+        </div>
+
+        <div class="serum-hero__actions">
+          <button
+            type="button"
+            class="button button--primary serum-hero__cta"
+            data-serum-add-to-cart
+            data-selected-variant-id="{{ selected_variant.id }}"
+            aria-label="Add selected serum to cart"
+          >
+            Add to cart
+          </button>
+        </div>
+
+        <div class="serum-hero__error" data-serum-error aria-live="assertive" role="alert"></div>
+
+        <div class="serum-hero__meta">
+          <div>
+            <strong>Free shipping</strong>
+            <span>on orders over ₹1,999</span>
+          </div>
+          <div>
+            <strong>30-day</strong>
+            <span>refund window</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="serum-hero__sticky-bar" data-sticky-cta aria-live="polite" aria-hidden="true">
+    <div class="page-width">
+      <button
+        type="button"
+        class="button button--primary serum-hero__sticky-button"
+        data-serum-add-to-cart-sticky
+        data-selected-variant-id="{{ selected_variant.id }}"
+        aria-label="Add selected serum and refill to cart"
+      >
+        Add to cart
+      </button>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Serum Hero",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Dual-action skin reset"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Clinical hydration + visible firming in one ritual."
+    },
+    {
+      "type": "text",
+      "id": "refill_variant_id",
+      "label": "Refill variant ID",
+      "default": ""
+    }
+  ],
+  "presets": [
+    {
+      "name": "Serum Hero"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,70 @@
+<section class="ingredient-cards section-{{ section.id }}-padding">
+  <div class="page-width">
+    <div class="ingredient-cards__header">
+      <p class="eyebrow">Key ingredients</p>
+      <h2>{{ section.settings.heading | default: 'Clinically chosen actives' }}</h2>
+    </div>
+
+    {% liquid
+      assign ingredient_list = product.metafields.custom.key_ingredients
+      assign ingredient_items = blank
+      if ingredient_list != blank
+        assign ingredient_items = ingredient_list
+      endif
+    %}
+
+    {% if ingredient_items != blank and ingredient_items.size > 0 %}
+      <div class="ingredient-cards__grid">
+        {% for ingredient in ingredient_items %}
+          {% assign ingredient_handle = ingredient.handle | default: ingredient.name | handleize %}
+          {% assign ingredient_name = ingredient.name | default: ingredient.title %}
+          {% assign ingredient_function = ingredient.function %}
+          {% assign ingredient_description = ingredient.description %}
+          {% assign ingredient_image = ingredient.image %}
+
+          <a class="ingredient-card" href="#{{ ingredient_handle }}">
+            {% if ingredient_image != blank %}
+              <div class="ingredient-card__image-wrap">
+                <img
+                  src="{{ ingredient_image | image_url: width: 600 }}"
+                  alt="{{ ingredient_name | escape }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              </div>
+            {% endif %}
+            <div class="ingredient-card__content">
+              <p class="ingredient-card__function">{{ ingredient_function }}</p>
+              <h3>{{ ingredient_name }}</h3>
+              <p>{{ ingredient_description | strip_html | truncate: 120 }}</p>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="ingredient-cards__empty">Ingredient cards will appear once the product's key ingredients are selected in Shopify Admin.</div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Ingredient Cards",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Clinically chosen actives"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ingredient Cards"
+    }
+  ]
+}
+{% endschema %}

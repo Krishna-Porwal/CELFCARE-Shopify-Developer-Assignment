@@ -1,0 +1,54 @@
+<section class="clinical-proof section-{{ section.id }}-padding">
+  <div class="page-width">
+    <div class="clinical-proof__header">
+      <p class="eyebrow">Clinical proof</p>
+      <h2>{{ section.settings.heading | default: 'Visible results backed by evidence' }}</h2>
+    </div>
+
+    {% if product.metafields.custom.clinical_stats != blank %}
+      {% assign stats = product.metafields.custom.clinical_stats %}
+      {% if stats.size > 0 %}
+        <div class="clinical-proof__grid">
+          {% for stat in stats limit: 3 %}
+            {% assign stat_value = stat.value %}
+            {% assign stat_label = stat.label %}
+            {% assign stat_source = stat.source %}
+
+            <article class="clinical-proof__card">
+              <div class="clinical-proof__value">{{ stat_value }}</div>
+              <p class="clinical-proof__label">{{ stat_label }}</p>
+              {% if stat_source != blank %}
+                <p class="clinical-proof__source">{{ stat_source }}</p>
+              {% endif %}
+            </article>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="clinical-proof__empty">Clinical proof will appear here once product stats are added in Shopify Admin.</div>
+      {% endif %}
+    {% else %}
+      <div class="clinical-proof__empty">Clinical proof will appear here once product stats are added in Shopify Admin.</div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Clinical Proof",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Visible results backed by evidence"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Clinical Proof"
+    }
+  ]
+}
+{% endschema %}

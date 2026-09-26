@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main": {
+      "type": "glossary-list",
+      "settings": {
+        "heading": "Ingredient glossary"
+      }
+    }
+  },
+  "order": ["main"]
+}

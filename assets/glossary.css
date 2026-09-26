@@ -1,0 +1,96 @@
+.glossary-list {
+  background: #f7f5f1;
+}
+
+.glossary-list__header {
+  margin-bottom: 2rem;
+}
+
+.glossary-controls {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.glossary-search input {
+  width: 100%;
+  border: 1px solid #e4e0d8;
+  border-radius: 999px;
+  padding: 0.9rem 1rem;
+  font: inherit;
+}
+
+.glossary-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+
+.glossary-filter__button {
+  border: 1px solid #e4e0d8;
+  background: transparent;
+  border-radius: 999px;
+  padding: 0.55rem 0.9rem;
+  cursor: pointer;
+}
+
+.glossary-filter__button.is-active {
+  background: #8A6D4E;
+  border-color: #8A6D4E;
+  color: white;
+}
+
+.glossary-grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.glossary-card {
+  background: #fff;
+  border: 1px solid #e4e0d8;
+  border-radius: 1.5rem;
+  overflow: hidden;
+}
+
+.glossary-card__image img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.glossary-card__content {
+  padding: 1.5rem;
+}
+
+.glossary-card__topline {
+  margin-bottom: 0.75rem;
+}
+
+.glossary-pill {
+  display: inline-block;
+  background: rgba(138, 109, 78, 0.08);
+  color: #8A6D4E;
+  border-radius: 999px;
+  padding: 0.35rem 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.7rem;
+}
+
+.glossary-card__inci {
+  color: #63615A;
+  margin: 0.2rem 0 0.8rem;
+}
+
+.glossary-card__used-in {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+@media screen and (min-width: 768px) {
+  .glossary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

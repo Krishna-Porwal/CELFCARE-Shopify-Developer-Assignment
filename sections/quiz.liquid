@@ -1,0 +1,113 @@
+{{ 'quiz.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'quiz.js' | asset_url }}" defer="defer"></script>
+
+<section class="quiz section-{{ section.id }}-padding" data-quiz-section>
+  <div class="page-width">
+    <div class="quiz__wrap">
+      <div class="quiz__header">
+        <p class="eyebrow">Skin consultation</p>
+        <h1>{{ section.settings.heading | default: 'Build your ritual' }}</h1>
+      </div>
+
+      <div class="quiz__progress" aria-label="Quiz progress">
+        <div class="quiz__progress-bar" data-quiz-progress-bar></div>
+      </div>
+
+      <div class="quiz__card" data-quiz-card>
+        <div class="quiz__step" data-quiz-step="0" aria-live="polite">
+          <p class="quiz__step-label">Question 1 of 4</p>
+          <h2>What is your age range?</h2>
+          <div class="quiz__options">
+            <button type="button" class="quiz__option" data-answer="18-29">18–29</button>
+            <button type="button" class="quiz__option" data-answer="30-39">30–39</button>
+            <button type="button" class="quiz__option" data-answer="40-49">40–49</button>
+            <button type="button" class="quiz__option" data-answer="50+">50+</button>
+          </div>
+        </div>
+
+        <div class="quiz__step" data-quiz-step="1" hidden>
+          <p class="quiz__step-label">Question 2 of 4</p>
+          <h2>What is your main concern?</h2>
+          <div class="quiz__options">
+            <button type="button" class="quiz__option" data-answer="Fine lines">Fine lines</button>
+            <button type="button" class="quiz__option" data-answer="Dryness">Dryness</button>
+            <button type="button" class="quiz__option" data-answer="Dullness">Dullness</button>
+            <button type="button" class="quiz__option" data-answer="Texture">Texture</button>
+          </div>
+        </div>
+
+        <div class="quiz__step" data-quiz-step="2" hidden>
+          <p class="quiz__step-label">Question 3 of 4</p>
+          <h2>What is your skin type?</h2>
+          <div class="quiz__options">
+            <button type="button" class="quiz__option" data-answer="Dry">Dry</button>
+            <button type="button" class="quiz__option" data-answer="Oily">Oily</button>
+            <button type="button" class="quiz__option" data-answer="Combination">Combination</button>
+            <button type="button" class="quiz__option" data-answer="Sensitive">Sensitive</button>
+          </div>
+        </div>
+
+        <div class="quiz__step" data-quiz-step="3" hidden>
+          <p class="quiz__step-label">Question 4 of 4</p>
+          <h2>What does your current routine look like?</h2>
+          <div class="quiz__options">
+            <button type="button" class="quiz__option" data-answer="Minimal">Minimal</button>
+            <button type="button" class="quiz__option" data-answer="Hydrating">Hydrating</button>
+            <button type="button" class="quiz__option" data-answer="Actives">Actives</button>
+            <button type="button" class="quiz__option" data-answer="Barrier repair">Barrier repair</button>
+          </div>
+        </div>
+
+        <div class="quiz__result" data-quiz-result hidden>
+          <p class="quiz__recommendation-label">Your recommendation</p>
+          <h2 data-quiz-recommendation>Recommended formula</h2>
+          <p data-quiz-recommendation-copy></p>
+          <button type="button" class="button button--primary" data-quiz-add-to-cart>Add to cart</button>
+        </div>
+      </div>
+
+      <div class="quiz__actions">
+        <button type="button" class="button button--secondary" data-quiz-back hidden>Back</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Skin Quiz",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Build your ritual"
+    },
+    {
+      "type": "text",
+      "id": "duo_variant_id",
+      "label": "Duo variant ID",
+      "default": ""
+    },
+    {
+      "type": "text",
+      "id": "instafirm_variant_id",
+      "label": "InstaFirm variant ID",
+      "default": ""
+    },
+    {
+      "type": "text",
+      "id": "instalift_variant_id",
+      "label": "InstaLift variant ID",
+      "default": ""
+    }
+  ],
+  "presets": [
+    {
+      "name": "Skin Quiz"
+    }
+  ]
+}
+{% endschema %}
