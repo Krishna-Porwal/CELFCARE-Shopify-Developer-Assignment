@@ -67,9 +67,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     items.push({ id: Number(selectedVariantId), quantity: 1 });
 
+    // Re-query the checkbox at click time in case the node reference is stale
+    const currentRefillCheckbox = hero.querySelector('[data-serum-refill-checkbox]');
+    const refillChecked = currentRefillCheckbox ? currentRefillCheckbox.checked : false;
     // Only include refill if configured with a real numeric variant id (>0)
     const refillIdNum = Number(refillVariantId);
-    if (refillCheckbox && refillCheckbox.checked && refillVariantId && !Number.isNaN(refillIdNum) && refillIdNum > 0) {
+    if (refillChecked && refillVariantId && !Number.isNaN(refillIdNum) && refillIdNum > 0) {
       items.push({ id: refillIdNum, quantity: 1 });
     }
     
